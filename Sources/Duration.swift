@@ -22,6 +22,10 @@ private var depthIndent : String {
     return String(count: depth, repeatedValue: "\t" as Character)
 }
 
+private var now : Double {
+	return NSDate().timeIntervalSinceReferenceDate
+}
+
 /// Define different styles of reporting
 public enum MeasurementLogStyle{
     /// Don't measure anything
@@ -75,7 +79,8 @@ public class Duration{
             return
         }
         reportContaining()
-        timingStack.append((NSDate.timeIntervalSinceReferenceDate(),name,false))
+        timingStack.append((now,name,false))
+
         depth += 1
     }
 
@@ -103,7 +108,7 @@ public class Duration{
         reportContaining()
         
         if includeTimeStamp{
-            let currentTime = NSDate.timeIntervalSinceReferenceDate()
+            let currentTime = now 
 
             let timeStamp = currentTime - timingStack[timingStack.count-1].startTime
             
@@ -120,7 +125,7 @@ public class Duration{
         if logStyle == .None {
             return 0
         }
-        let endTime = NSDate.timeIntervalSinceReferenceDate()
+        let endTime = now
         precondition(depth > 0, "Attempt to stop a measurement when none has been started")
         
         let beginning = timingStack.removeLast()
