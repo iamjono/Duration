@@ -1,6 +1,9 @@
 # Duration
 A simple Swift package for measuring and reporting the time taken for operations
 
+## License 
+Duration is distributed under the Apache 2.0 license
+
 ## Usage
 
 ### Simple Measurements
@@ -58,3 +61,5 @@ Because you may want to stop reporting of measurements in release builds, you ca
 	
 Will disable measurement logging. In the future I will extend this library to support logging to a data-structure for subsequent analysis, but at this point there are two valid values `.None` and `.Print` 
 
+# Reporting Issues
+Please report issues using GitHub's standard system

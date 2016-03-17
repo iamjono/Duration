@@ -52,11 +52,18 @@ public class Duration{
         timingStack.append((NSDate.timeIntervalSinceReferenceDate(),name,false))
         depth += 1
     }
-    
+
     ///
-    /// Stops measuring (and reports if a name of the measurement was originally supplied)
+    /// Stops measuring generating a log entry
     ///
     public static func stopMeasurement()->Double{
+        return stopMeasurement(nil)
+    }
+    
+    ///
+    /// Stops measuring and generate log entry
+    ///
+    public static func stopMeasurement(executionDetails:String?)->Double{
         let endTime = NSDate.timeIntervalSinceReferenceDate()
         precondition(depth > 0, "Attempt to stop a measurement when none has been started")
         
@@ -67,15 +74,14 @@ public class Duration{
         let took = endTime - beginning.startTime
         
         if logStyle == .Print {
-            print("\(depthIndent)\(beginning.name) took: \(took.milliSeconds)")
+            print("\(depthIndent)\(beginning.name) took: \(took.milliSeconds)" + (executionDetails == nil ? "" : " (\(executionDetails!))"))
         }
         
         return took
     }
     
     ///
-    ///  Calls a particular block mesuring the time taken to complete the block.
-    ///  If a name is supplied the time take for each iteration will be reported
+    ///  Calls a particular block measuring the time taken to complete the block.
     ///
     public static func measure(name:String, block: MeasuredBlock)->Double{
         startMeasurement(name)
@@ -85,8 +91,8 @@ public class Duration{
     
     ///
     /// Calls a particular block the specified number of times, returning the average
-    /// number of seconds it took to complete the code. If a name is supplied the time
-    /// take for each iteration will be reported
+    /// number of seconds it took to complete the code. The time
+    /// take for each iteration will be logged
     ///
     public static func measure(name:String,iterations:Int = 10,forBlock block:MeasuredBlock)->Double{
         precondition(iterations > 0, "Iterations must be a positive integer")
