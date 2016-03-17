@@ -34,21 +34,47 @@ public enum MeasurementLogStyle{
 public class Duration{
     private static var timingStack = [(startTime:Double,name:String,reported:Bool)]()
 
+    private static var logStyleStack = [MeasurementLogStyle]()
+    
+    /// When you are releasing and want to turn off logging, and your library
+    /// may be used by another, it is better to push/pop a logging state
+    public static func pushLogStyle(style:MeasurementLogStyle){
+        logStyleStack.append(logStyle)
+        logStyle = style
+    }
+    
+    public static func popLogStyle(){
+        logStyle = logStyleStack.removeLast()
+    }
 
     /// Set to control how measurements are reported
     public static var logStyle = MeasurementLogStyle.Print
 
+    private static func reportContaining(){
+        if logStyle != .None &&  depth > 0 {
+            if logStyle == .Print{
+                for stackPointer in 0..<timingStack.count{
+                    let containingMeasurement = timingStack[stackPointer]
+                    
+                    if !containingMeasurement.reported {
+                        print(String(count: stackPointer, repeatedValue: "\t" as Character)+"Measuring \(containingMeasurement.name):")
+                        
+                        timingStack[stackPointer] = (containingMeasurement.startTime,containingMeasurement.name,true)
+                    }
+                    
+                }
+            }
+        }
+    }
+    
     ///
     /// Call before code you wish to track performance of, multiple measurements can be nested
     ///
     public static func startMeasurement(name:String){
-        if logStyle != .None &&  depth > 0 {
-            let containingMeasurement = timingStack.removeLast()
-            if !containingMeasurement.reported && logStyle == .Print{
-                print("Measuring \(containingMeasurement.name):")
-            }
-            timingStack.append((containingMeasurement.startTime,containingMeasurement.name,true))
+        if logStyle == .None {
+            return
         }
+        reportContaining()
         timingStack.append((NSDate.timeIntervalSinceReferenceDate(),name,false))
         depth += 1
     }
@@ -57,13 +83,43 @@ public class Duration{
     /// Stops measuring generating a log entry
     ///
     public static func stopMeasurement()->Double{
+        if logStyle == .None {
+            return 0
+        }
         return stopMeasurement(nil)
+    }
+    
+    ///
+    /// Prints a message, optionally with a time stamp (measured from the 
+    /// start of the current measurement
+    ///
+    public static func log(message:String, includeTimeStamp:Bool = false){
+        if logStyle == .None {
+            return
+        }
+        guard logStyle != .None else {
+            return
+        }
+        reportContaining()
+        
+        if includeTimeStamp{
+            let currentTime = NSDate.timeIntervalSinceReferenceDate()
+
+            let timeStamp = currentTime - timingStack[timingStack.count-1].startTime
+            
+            return print("\(depthIndent)\(message)  \(timeStamp.milliSeconds)ms")
+        } else {
+            return print("\(depthIndent)\(message)")
+        }
     }
     
     ///
     /// Stops measuring and generate log entry
     ///
     public static func stopMeasurement(executionDetails:String?)->Double{
+        if logStyle == .None {
+            return 0
+        }
         let endTime = NSDate.timeIntervalSinceReferenceDate()
         precondition(depth > 0, "Attempt to stop a measurement when none has been started")
         
@@ -84,6 +140,11 @@ public class Duration{
     ///  Calls a particular block measuring the time taken to complete the block.
     ///
     public static func measure(name:String, block: MeasuredBlock)->Double{
+        if logStyle == .None {
+            //Still call the block
+            block()
+            return 0
+        }
         startMeasurement(name)
         block()
         return stopMeasurement()
@@ -95,6 +156,10 @@ public class Duration{
     /// take for each iteration will be logged
     ///
     public static func measure(name:String,iterations:Int = 10,forBlock block:MeasuredBlock)->Double{
+        if logStyle == .None {
+            return 0
+        }
+        
         precondition(iterations > 0, "Iterations must be a positive integer")
         
         var total : Double = 0

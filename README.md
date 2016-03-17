@@ -61,5 +61,19 @@ Because you may want to stop reporting of measurements in release builds, you ca
 	
 Will disable measurement logging. In the future I will extend this library to support logging to a data-structure for subsequent analysis, but at this point there are two valid values `.None` and `.Print` 
 
+If you are using Duration within a Package of your own that you are distributing, rather than just over-writing the log style, you can push your desired style, then pop it to restore it to what a consuming package would want. For example
+
+	public func myMethod(){
+		//Because this is a release of your package
+		//don't log measurements
+		pushLogStyle(.None)
+		
+		// Do stuff that is instrumented
+		
+		//Restore the logging style to whatever it was
+		//before
+		popLogStyle()
+	}
+
 # Reporting Issues
 Please report issues using GitHub's standard system
