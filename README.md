@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/SwiftStudies/Duration.svg?branch=master)](https://travis-ci.org/SwiftStudies/Duration)
+
 # Duration
 A simple Swift package for measuring and reporting the time taken for operations
 
