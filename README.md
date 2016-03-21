@@ -1,12 +1,14 @@
 [![Build Status](https://travis-ci.org/SwiftStudies/Duration.svg?branch=master)](https://travis-ci.org/SwiftStudies/Duration)
 
 # Duration
-A simple Swift package for measuring and reporting the time taken for operations
+A simple Swift package for measuring and reporting the time taken for operations. It is derived from [a version for Playgrounds](http://www.swift-studies.com/blog/2015/5/21/performance-testing-in-xcode-playgrounds) that I blogged about some time ago, but kept needing to use in various projects. 
 
 ## License 
 Duration is distributed under the Apache 2.0 license
 
 ## Usage
+
+Duration supports iOS, OS X, tvOS, and Linux.
 
 ### Simple Measurements
 
