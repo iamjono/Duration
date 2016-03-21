@@ -14,6 +14,7 @@
 
 import Foundation
 
+/// Definition of a block that can be used for measurements
 public typealias MeasuredBlock = ()->Void
 
 private var depth = 0
@@ -31,29 +32,39 @@ public enum MeasurementLogStyle{
     /// Don't measure anything
     case None
     
-    /// Print the results of measurements
+    /// Log results of measurements to the console
     case Print
 }
 
+/// Provides static methods for performing measurements
 public class Duration{
     private static var timingStack = [(startTime:Double,name:String,reported:Bool)]()
 
     private static var logStyleStack = [MeasurementLogStyle]()
     
     /// When you are releasing and want to turn off logging, and your library
-    /// may be used by another, it is better to push/pop a logging state
+    /// may be used by another, it is better to push/pop a logging state. This
+    /// will ensure your settings do not impact those of other modules. By pushing
+    /// your desired log style, and sub-sequently pop'ing before returning from 
+    /// your measured method only your desired measuremets will be logged.
     public static func pushLogStyle(style:MeasurementLogStyle){
         logStyleStack.append(logStyle)
         logStyle = style
     }
     
+    /// Pops the last pushed logging style and restores the logging style to 
+    /// its previous style
     public static func popLogStyle(){
         logStyle = logStyleStack.removeLast()
     }
 
-    /// Set to control how measurements are reported
+    /// Set to control how measurements are reported. It is recommended to use
+    /// `pushLogStyle` and `popLogStyle` if you intend to make your module
+    /// available for others to use
     public static var logStyle = MeasurementLogStyle.Print
 
+    /// Ensures that if any parent measurement boundaries have not yet resulted
+    /// in output that their headers are displayed
     private static func reportContaining(){
         if logStyle != .None &&  depth > 0 {
             if logStyle == .Print{
@@ -71,9 +82,9 @@ public class Duration{
         }
     }
     
-    ///
-    /// Call before code you wish to track performance of, multiple measurements can be nested
-    ///
+    /// Start a measurement, call `stopMeasurement` when you have completed your
+    /// desired operations. The `name` will be used to identify this specific 
+    /// measurement. Multiple calls will nest measurements within each other.
     public static func startMeasurement(name:String){
         if logStyle == .None {
             return
@@ -84,9 +95,10 @@ public class Duration{
         depth += 1
     }
 
-    ///
-    /// Stops measuring generating a log entry
-    ///
+    /// Stops measuring and generates a log entry. Note if you wish to include
+    /// additional information (for example, the number of items processed) then
+    /// you can use the `stopMeasurement(executionDetails:String?)` version of
+    /// the function.
     public static func stopMeasurement()->Double{
         if logStyle == .None {
             return 0
@@ -94,10 +106,8 @@ public class Duration{
         return stopMeasurement(nil)
     }
     
-    ///
-    /// Prints a message, optionally with a time stamp (measured from the 
-    /// start of the current measurement
-    ///
+    /// Prints a message, optionally with a time stamp (measured from the
+    /// start of the current measurement.
     public static func log(message:String, includeTimeStamp:Bool = false){
         if logStyle == .None {
             return
@@ -118,9 +128,7 @@ public class Duration{
         }
     }
     
-    ///
-    /// Stops measuring and generate log entry
-    ///
+    /// Stop measuring operations and generate log entry.
     public static func stopMeasurement(executionDetails:String?)->Double{
         if logStyle == .None {
             return 0
@@ -158,8 +166,8 @@ public class Duration{
     ///
     /// Calls a particular block the specified number of times, returning the average
     /// number of seconds it took to complete the code. The time
-    /// take for each iteration will be logged
-    ///
+    /// take for each iteration will be logged as well as the average time and
+    /// standard deviation.
     public static func measure(name:String,iterations:Int = 10,forBlock block:MeasuredBlock)->Double{
         if logStyle == .None {
             return 0
