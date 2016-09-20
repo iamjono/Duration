@@ -1,0 +1,212 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		__src_cc_ref_Sources/Duration.swift /* Duration.swift in Sources */ = {isa = PBXBuildFile; fileRef = __PBXFileRef_Sources/Duration.swift /* Duration.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		__PBXFileRef_Duration.xcodeproj/Configs/Debug.xcconfig /* Duration.xcodeproj/Configs/Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Duration.xcodeproj/Configs/Debug.xcconfig; sourceTree = "<group>"; };
+		__PBXFileRef_Duration.xcodeproj/Configs/Project.xcconfig /* Duration.xcodeproj/Configs/Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Duration.xcodeproj/Configs/Project.xcconfig; sourceTree = "<group>"; };
+		__PBXFileRef_Duration.xcodeproj/Configs/Release.xcconfig /* Duration.xcodeproj/Configs/Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Duration.xcodeproj/Configs/Release.xcconfig; sourceTree = "<group>"; };
+		__PBXFileRef_Package.swift /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		__PBXFileRef_Sources/Duration.swift /* Duration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Duration.swift; path = Sources/Duration.swift; sourceTree = "<group>"; };
+		"_____Product_Duration" /* Duration.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Duration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		"___LinkPhase_Duration" /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		"___RootGroup_" = {
+			isa = PBXGroup;
+			children = (
+				__PBXFileRef_Package.swift /* Package.swift */,
+				"_____Configs_" /* Configs */,
+				"_____Sources_" /* Sources */,
+				"____Products_" /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		"____Products_" /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				"_____Product_Duration" /* Duration.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		"_____Configs_" /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				__PBXFileRef_Duration.xcodeproj/Configs/Project.xcconfig /* Duration.xcodeproj/Configs/Project.xcconfig */,
+				__PBXFileRef_Duration.xcodeproj/Configs/Debug.xcconfig /* Duration.xcodeproj/Configs/Debug.xcconfig */,
+				__PBXFileRef_Duration.xcodeproj/Configs/Release.xcconfig /* Duration.xcodeproj/Configs/Release.xcconfig */,
+			);
+			name = Configs;
+			sourceTree = "<group>";
+		};
+		"_____Sources_" /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				"_______Group_Duration" /* Duration */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		"_______Group_Duration" /* Duration */ = {
+			isa = PBXGroup;
+			children = (
+				__PBXFileRef_Sources/Duration.swift /* Duration.swift */,
+			);
+			name = Duration;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		"______Target_Duration" /* Duration */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = "_______Confs_Duration" /* Build configuration list for PBXNativeTarget "Duration" */;
+			buildPhases = (
+				CompilePhase_Duration /* Sources */,
+				"___LinkPhase_Duration" /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Duration;
+			productName = Duration;
+			productReference = "_____Product_Duration" /* Duration.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		__RootObject_ /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 9999;
+				TargetAttributes = {
+					"______Target_Duration" = {
+						LastSwiftMigration = 0800;
+					};
+				};
+			};
+			buildConfigurationList = "___RootConfs_" /* Build configuration list for PBXProject "Duration" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = "___RootGroup_";
+			productRefGroup = "____Products_" /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				"______Target_Duration" /* Duration */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CompilePhase_Duration /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				__src_cc_ref_Sources/Duration.swift /* Duration.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		_ReleaseConf_Duration /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
+				INFOPLIST_FILE = Duration.xcodeproj/Duration_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "\"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx\"";
+				LIBRARY_SEARCH_PATHS = "\"$(PROJECT_TEMP_DIR)/SymlinkLibs/\"";
+				OTHER_LDFLAGS = "\"$(inherited)\"";
+				OTHER_SWIFT_FLAGS = "\"$(inherited)\"";
+				PRODUCT_BUNDLE_IDENTIFIER = Duration;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		"___DebugConf_Duration" /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
+				INFOPLIST_FILE = Duration.xcodeproj/Duration_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "\"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx\"";
+				LIBRARY_SEARCH_PATHS = "\"$(PROJECT_TEMP_DIR)/SymlinkLibs/\"";
+				OTHER_LDFLAGS = "\"$(inherited)\"";
+				OTHER_SWIFT_FLAGS = "\"$(inherited)\"";
+				PRODUCT_BUNDLE_IDENTIFIER = Duration;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		"_____Release_" /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = __PBXFileRef_Duration.xcodeproj/Configs/Release.xcconfig /* Duration.xcodeproj/Configs/Release.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		"_______Debug_" /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = __PBXFileRef_Duration.xcodeproj/Configs/Debug.xcconfig /* Duration.xcodeproj/Configs/Debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		"___RootConfs_" /* Build configuration list for PBXProject "Duration" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				"_______Debug_" /* Debug */,
+				"_____Release_" /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		"_______Confs_Duration" /* Build configuration list for PBXNativeTarget "Duration" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				"___DebugConf_Duration" /* Debug */,
+				_ReleaseConf_Duration /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = __RootObject_ /* Project object */;
+}

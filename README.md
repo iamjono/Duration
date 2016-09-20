@@ -1,10 +1,41 @@
-[![Build Status](https://travis-ci.org/SwiftStudies/Duration.svg?branch=master)](https://travis-ci.org/SwiftStudies/Duration)
-
 # Duration
-A simple Swift package for measuring and reporting the time taken for operations. It is derived from [a version for Playgrounds](http://www.swift-studies.com/blog/2015/5/21/performance-testing-in-xcode-playgrounds) that I blogged about some time ago, but kept needing to use in various projects. 
+A simple Swift 3 package for measuring and reporting the time taken for operations. It is derived from [a version for Playgrounds](http://www.swift-studies.com/blog/2015/5/21/performance-testing-in-xcode-playgrounds) that I blogged about some time ago, but kept needing to use in various projects. 
+
+Note the original Swift repo can be found here:
+[https://github.com/SwiftStudies/Duration](https://github.com/SwiftStudies/Duration)
+
+## This Fork
+
+This fork is intended as a server side utility. 
+
+* It is Swift 3.0 GM and Swift Package Manager (SPM) ready.
 
 ## License 
 Duration is distributed under the Apache 2.0 license
+
+###Requirements
+
+- Swift version 3.0
+
+## Installation
+
+### Install via Swift Package Manager
+
+* Add the following to your `Package.swift` file:
+
+``` swift
+.Package(
+    url: "https://github.com/iamjono/Duration.git", 
+    majorVersion: 1, minor: 0
+    ),
+```
+
+Then, regenerate your Xcode project:
+
+```
+swift package generate-xcodeproj
+```
+
 
 ## Usage
 

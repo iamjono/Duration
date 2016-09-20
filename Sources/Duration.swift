@@ -20,59 +20,59 @@ public typealias MeasuredBlock = ()->Void
 private var depth = 0
 
 private var depthIndent : String {
-    return String(count: depth, repeatedValue: "\t" as Character)
+    return String(repeating: "\t", count: depth)
 }
 
 private var now : Double {
-	return NSDate().timeIntervalSinceReferenceDate
+	return Date().timeIntervalSinceReferenceDate
 }
 
 /// Define different styles of reporting
 public enum MeasurementLogStyle{
     /// Don't measure anything
-    case None
+    case none
     
     /// Log results of measurements to the console
-    case Print
+    case print
 }
 
 /// Provides static methods for performing measurements
-public class Duration{
-    private static var timingStack = [(startTime:Double,name:String,reported:Bool)]()
+open class Duration{
+    fileprivate static var timingStack = [(startTime:Double,name:String,reported:Bool)]()
 
-    private static var logStyleStack = [MeasurementLogStyle]()
+    fileprivate static var logStyleStack = [MeasurementLogStyle]()
     
     /// When you are releasing and want to turn off logging, and your library
     /// may be used by another, it is better to push/pop a logging state. This
     /// will ensure your settings do not impact those of other modules. By pushing
     /// your desired log style, and sub-sequently pop'ing before returning from 
     /// your measured method only your desired measuremets will be logged.
-    public static func pushLogStyle(style:MeasurementLogStyle){
+    open static func pushLogStyle(_ style:MeasurementLogStyle){
         logStyleStack.append(logStyle)
         logStyle = style
     }
     
     /// Pops the last pushed logging style and restores the logging style to 
     /// its previous style
-    public static func popLogStyle(){
+    open static func popLogStyle(){
         logStyle = logStyleStack.removeLast()
     }
 
     /// Set to control how measurements are reported. It is recommended to use
     /// `pushLogStyle` and `popLogStyle` if you intend to make your module
     /// available for others to use
-    public static var logStyle = MeasurementLogStyle.Print
+    open static var logStyle = MeasurementLogStyle.print
 
     /// Ensures that if any parent measurement boundaries have not yet resulted
     /// in output that their headers are displayed
-    private static func reportContaining(){
-        if logStyle != .None &&  depth > 0 {
-            if logStyle == .Print{
+    fileprivate static func reportContaining(){
+        if logStyle != .none &&  depth > 0 {
+            if logStyle == .print{
                 for stackPointer in 0..<timingStack.count{
                     let containingMeasurement = timingStack[stackPointer]
                     
                     if !containingMeasurement.reported {
-                        print(String(count: stackPointer, repeatedValue: "\t" as Character)+"Measuring \(containingMeasurement.name):")
+                        print(String(repeating: "\t", count: stackPointer)+"Measuring \(containingMeasurement.name):")
                         
                         timingStack[stackPointer] = (containingMeasurement.startTime,containingMeasurement.name,true)
                     }
@@ -85,8 +85,8 @@ public class Duration{
     /// Start a measurement, call `stopMeasurement` when you have completed your
     /// desired operations. The `name` will be used to identify this specific 
     /// measurement. Multiple calls will nest measurements within each other.
-    public static func startMeasurement(name:String){
-        if logStyle == .None {
+    open static func startMeasurement(_ name:String){
+        if logStyle == .none {
             return
         }
         reportContaining()
@@ -99,8 +99,8 @@ public class Duration{
     /// additional information (for example, the number of items processed) then
     /// you can use the `stopMeasurement(executionDetails:String?)` version of
     /// the function.
-    public static func stopMeasurement()->Double{
-        if logStyle == .None {
+    open static func stopMeasurement()->Double{
+        if logStyle == .none {
             return 0
         }
         return stopMeasurement(nil)
@@ -108,11 +108,11 @@ public class Duration{
     
     /// Prints a message, optionally with a time stamp (measured from the
     /// start of the current measurement.
-    public static func log(message:String, includeTimeStamp:Bool = false){
-        if logStyle == .None {
+    open static func log(_ message:String, includeTimeStamp:Bool = false){
+        if logStyle == .none {
             return
         }
-        guard logStyle != .None else {
+        guard logStyle != .none else {
             return
         }
         reportContaining()
@@ -129,8 +129,8 @@ public class Duration{
     }
     
     /// Stop measuring operations and generate log entry.
-    public static func stopMeasurement(executionDetails:String?)->Double{
-        if logStyle == .None {
+    open static func stopMeasurement(_ executionDetails:String?)->Double{
+        if logStyle == .none {
             return 0
         }
         let endTime = now
@@ -142,7 +142,7 @@ public class Duration{
         
         let took = endTime - beginning.startTime
         
-        if logStyle == .Print {
+        if logStyle == .print {
             print("\(depthIndent)\(beginning.name) took: \(took.milliSeconds)" + (executionDetails == nil ? "" : " (\(executionDetails!))"))
         }
         
@@ -152,8 +152,8 @@ public class Duration{
     ///
     ///  Calls a particular block measuring the time taken to complete the block.
     ///
-    public static func measure(name:String, block: MeasuredBlock)->Double{
-        if logStyle == .None {
+    open static func measure(_ name:String, block: MeasuredBlock)->Double{
+        if logStyle == .none {
             //Still call the block
             block()
             return 0
@@ -168,8 +168,8 @@ public class Duration{
     /// number of seconds it took to complete the code. The time
     /// take for each iteration will be logged as well as the average time and
     /// standard deviation.
-    public static func measure(name:String,iterations:Int = 10,forBlock block:MeasuredBlock)->Double{
-        if logStyle == .None {
+    open static func measure(_ name:String,iterations:Int = 10,forBlock block:MeasuredBlock)->Double{
+        if logStyle == .none {
             return 0
         }
         
@@ -178,7 +178,7 @@ public class Duration{
         var total : Double = 0
         var samples = [Double]()
         
-        if logStyle == .Print {
+        if logStyle == .print {
             print("\(depthIndent)Measuring \(name)")
         }
         
@@ -192,7 +192,7 @@ public class Duration{
         
         let mean = total / Double(iterations)
         
-        if logStyle == .Print {
+        if logStyle == .print {
             
             var deviation = 0.0
             
